@@ -1,4 +1,4 @@
-class Unionfind:
+class Disjoint:
     def __init__(self, n):
         self.parent = [i for i in range(n)]
     
@@ -23,7 +23,7 @@ class Unionfind:
 class Solution:
     def smallestEquivalentString(self, s1: str, s2: str, baseStr: str) -> str:
         
-        uni = Unionfind(26)
+        uni = Disjoint(26)
         
         ans = ""
         
