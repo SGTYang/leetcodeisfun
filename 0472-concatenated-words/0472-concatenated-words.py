@@ -3,8 +3,11 @@ class Solution:
         
         word_set = set(words)
         res = []
+        dp = {}
         
         def dfs(word):
+            if word in dp:
+                return dp[word]
             
             for i in range(1,len(word)):
                 prefix = word[:i]
@@ -12,8 +15,12 @@ class Solution:
                 
                 if ((prefix in word_set and suffix in word_set) or 
                     (prefix in word_set and dfs(suffix))):
-                    return True
-                   
+                    dp[word] = True
+                    return dp[word]
+            
+            dp[word] = False
+            return dp[word]
+            
         for w in words:
             if dfs(w):
                 res.append(w)
