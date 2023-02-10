@@ -18,7 +18,7 @@ class Solution:
                 max(newR, newC) < N and
                 grid[newR][newC]==0):
                     q.append([newR,newC])
-                    grid[newR][newC] = grid[r][c] + 1
+                    grid[newR][newC] = res + 1
         
         return res-1 if res > 1 else -1
                 
