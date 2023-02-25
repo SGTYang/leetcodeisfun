@@ -8,4 +8,3 @@ class Solution:
                 l = r
         
         return ans
-            
