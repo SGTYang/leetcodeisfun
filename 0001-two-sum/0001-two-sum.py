@@ -1,13 +1,12 @@
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
+        nums_dict = {}
         
-        search = {}
-
-        for idx in range(len(nums)):
-            find = target-nums[idx]
-
-            if find in search:
-                return [idx, search[find]]
-            search[nums[idx]] = idx
+        for i in range(len(nums)):
+            f = target - nums[i]
+            
+            if f in nums_dict:
+                return[i, nums_dict[f]]
+            nums_dict[nums[i]] = i
         
-        return -1
+        return None
