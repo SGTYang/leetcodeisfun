@@ -1,17 +1,15 @@
 class Solution:
     def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        l,r = 0, len(numbers)-1
         
-        left, right = 0, len(numbers)-1
-        
-        while left < right:
-            s = numbers[left]+numbers[right]
+        while l < r:
+            sum_up = numbers[l]+numbers[r]
             
-            if s == target:
-                break
-                
-            elif numbers[left] + numbers[right] < target:
-                left += 1
+            if sum_up < target:
+                l += 1
+            elif sum_up > target:
+                r -= 1
             else:
-                right -= 1
+                return [l+1, r+1]
         
-        return [left+1, right+1]
+        return []
