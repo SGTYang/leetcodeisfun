@@ -2,11 +2,13 @@ class Solution:
     def climbStairs(self, n: int) -> int:
         if n < 3:
             return n
-        dp = [0]*n
-        dp[0] = 1
-        dp[1] = 2
         
-        for i in range(2, n):
-            dp[i] = dp[i-1]+dp[i-2]
+        step_one = 1
+        step_two = 2
+        for i in range(2,n):
+            if i%2 == 0:
+                step_one = step_one + step_two
+            else:
+                step_two = step_one + step_two
         
-        return dp[-1]
+        return max(step_one, step_two)
