@@ -1,14 +1,11 @@
 class Solution:
     def climbStairs(self, n: int) -> int:
-        if n < 3:
-            return n
+        one_step, two_step = 1, 1
         
-        step_one = 1
-        step_two = 2
-        for i in range(2,n):
-            if i%2 == 0:
-                step_one = step_one + step_two
-            else:
-                step_two = step_one + step_two
+        for i in range(n-1):
+            temp = one_step
+            one_step = one_step+two_step
+            two_step = temp
         
-        return max(step_one, step_two)
+        return one_step
+            
