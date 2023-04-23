@@ -1,12 +1,12 @@
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        nums_dict = {}
+        num_dict = {}
         
         for i in range(len(nums)):
-            f = target - nums[i]
-            
-            if f in nums_dict:
-                return[i, nums_dict[f]]
-            nums_dict[nums[i]] = i
+            fid = target-nums[i]
+            if fid in num_dict:
+                return[i, num_dict[fid]]
+            else:
+                num_dict[nums[i]] = i
         
         return None
