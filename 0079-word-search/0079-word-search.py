@@ -26,7 +26,8 @@ class Solution:
         
         for i in range(ROWS):
             for j in range(COLS):
-                if dfs(i,j,0):
-                    return True
+                if board[i][j] == word[0]:
+                    if dfs(i,j,0):
+                        return True
         return False
         
