@@ -8,24 +8,20 @@ class Solution:
         if not head:
             return head
         
-        length, tail = 1, head
-        test = head
-        
+        length = 1
+        tail = head
         while tail.next:
-            length += 1
             tail = tail.next
-        
+            length += 1
         k = k%length
         if k == 0:
             return head
-        
         curr = head
         
         for i in range(length-k-1):
             curr = curr.next
-        newhead = curr.next
+        rotated = curr.next
         curr.next = None
-        
         tail.next = head
         
-        return newhead
+        return rotated
