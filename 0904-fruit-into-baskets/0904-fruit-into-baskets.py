@@ -1,17 +1,19 @@
 class Solution:
     def totalFruit(self, fruits: List[int]) -> int:
-        buckets = defaultdict(int)
-        left = res = 0
-        for i in range(len(fruits)):
-            buckets[fruits[i]] += 1
+        count = defaultdict(int)
+        l, res, total = 0, 0, 0
+        
+        for r in range(len(fruits)):
+            count[fruits[r]] += 1
+            total += 1
+            while len(count) > 2:
+                f = fruits[l]
+                count[f] -= 1
+                total -= 1
+                l += 1
+                if not count[f]:
+                    count.pop(f)
             
-            while len(buckets)>2:
-                f = fruits[left]
-                buckets[f] -= 1
-                left += 1
-                if not buckets[f]:
-                    buckets.pop(f)
-
-            res = max(res, sum(buckets.values()))
-
+            res = max(res, total)
+        
         return res
