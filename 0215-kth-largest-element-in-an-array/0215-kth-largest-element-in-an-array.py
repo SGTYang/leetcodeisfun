@@ -8,4 +8,4 @@ class Solution:
             heapq.heappop(heap)
             k -= 1
             
-        return heapq.heappop(heap)*-1
+        return -heapq.heappop(heap)
