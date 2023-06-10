@@ -4,8 +4,8 @@ class Solution:
         negDiag = set()
         posDiag = set()
         
-        board = [["."]*n for i in range(n)]
         res = []
+        board = [["."]*n for i in range(n)]
         
         def backtrack(r):
             if r == n:
