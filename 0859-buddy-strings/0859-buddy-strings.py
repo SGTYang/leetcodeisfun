@@ -3,14 +3,15 @@ class Solution:
         if len(s) != len(goal):
             return False
         
-        if s == goal and len(s) != len(set(goal)):
+        if s == goal and len(s) != len(set(s)):
             return True
         
-        diffs = []
+        diff = []
         for i in range(len(s)):
             if s[i] != goal[i]:
-                diffs.append(i)
-                if len(diffs) > 2:
-                    return False
-                
-        return len(diffs) == 2 and s[diffs[0]] == goal[diffs[1]] and s[diffs[1]] == goal[diffs[0]]
+                diff.append(i)
+        
+        if len(diff) > 2:
+            return False
+
+        return len(diff) == 2 and s[diff[0]] == goal[diff[1]] and s[diff[1]] == goal[diff[0]]
