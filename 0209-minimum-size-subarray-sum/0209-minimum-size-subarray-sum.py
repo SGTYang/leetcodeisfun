@@ -11,4 +11,3 @@ class Solution:
                 l += 1
         
         return 0 if res == float('inf') else res
-        
