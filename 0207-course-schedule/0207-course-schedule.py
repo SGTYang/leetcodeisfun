@@ -1,27 +1,30 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        prereq = {c:[] for c in range(numCourses)}
+        
+        for crs, pre in prerequisites:
+            prereq[crs].append(pre)
+        
         visited = set()
-        count = defaultdict(list)
         
-        for pre in prerequisites:
-            count[pre[0]].append(pre[1])
-        
-        def dfs(course):
-            if course in visited:
+        def dfs(crs):
+            if crs in visited:
                 return False
-            if count[course] == []:
+            if prereq[crs] == []:
                 return True
             
-            visited.add(course)
-            for c in count[course]:
-                if not dfs(c):
+            visited.add(crs)
+            
+            for pre in prereq[crs]:
+                if not dfs(pre):
                     return False
-            visited.remove(course)
-            count[course] = []
+            
+            visited.remove(crs)
+            prereq[crs] = []
             
             return True
-        
-        for c in range(numCourses):
-            if not dfs(c):
+            
+        for i in range(numCourses):
+            if not dfs(i):
                 return False
         return True
