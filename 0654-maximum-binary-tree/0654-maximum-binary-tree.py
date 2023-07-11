@@ -6,6 +6,18 @@
 #         self.right = right
 class Solution:
     def constructMaximumBinaryTree(self, nums: List[int]) -> Optional[TreeNode]:
+        if not nums:
+            return
+        
+        element = max(nums)
+        index = nums.index(element)
+        
+        node = TreeNode(element)
+        
+        node.left = self.constructMaximumBinaryTree(nums[0:index])
+        node.right = self.constructMaximumBinaryTree(nums[index + 1:])
+        
+        return node
         
         def recursive(num_list):
             nums_dict = {v:i for i, v in enumerate(num_list)}
