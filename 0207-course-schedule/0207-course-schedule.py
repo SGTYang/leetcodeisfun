@@ -28,3 +28,4 @@ class Solution:
             if not dfs(i):
                 return False
         return True
+            
