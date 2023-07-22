@@ -3,16 +3,18 @@ class Solution:
         # 2(p+c-x) = p+nc-x
         slow, fast = 0, 0
         
-        while 1:
+        while True:
             slow = nums[slow]
             fast = nums[nums[fast]]
+            
             if slow == fast:
                 break
         
         slow2 = 0
-        while 1:
-            slow = nums[slow]
+        while True:
             slow2 = nums[slow2]
+            slow = nums[slow]
+            
             if slow == slow2:
                 break
         
