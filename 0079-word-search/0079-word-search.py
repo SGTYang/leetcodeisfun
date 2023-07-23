@@ -1,33 +1,34 @@
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
-        path = set()
-        ROWS, COLS = len(board), len(board[0])
+        # Space: O(len(word)). This is the space required to store the recursive stack during the DFS search.
+        # Time: O(n * m) * dfs -> O(n * m * 4^len(word)) 
+        # The call stack of dfs is going to be len(word)
+        # So 4^len(word)
         
-        def dfs(r,c,i):
-            if i == len(word):
+        visited = set()
+        m, n = len(board), len(board[0])
+        
+        def backtrack(i,j, idx):
+            if idx == len(word):
                 return True
             
-            if (r<0 or c<0 or 
-                (r,c) in path 
-                or r>=ROWS or c>=COLS or 
-                board[r][c] != word[i]):
+            if (i,j) in visited or i >= m or j >= n or i < 0 or j < 0 or board[i][j] != word[idx]:
                 return False
             
-            path.add((r,c))
+            visited.add((i,j))
             
-            res = (dfs(r+1,c,i+1) or
-                   dfs(r-1,c,i+1) or
-                   dfs(r,c-1,i+1) or
-                   dfs(r,c+1,i+1))
+            res = (backtrack(i + 1, j, idx+1) or
+                backtrack(i - 1, j, idx+1) or
+                backtrack(i, j - 1, idx+1) or
+                backtrack(i, j + 1, idx+1))
             
-            path.remove((r,c))
+            visited.remove((i,j))
             
             return res
         
-        for i in range(ROWS):
-            for j in range(COLS):
-                if board[i][j] == word[0]:
-                    if dfs(i,j,0):
-                        return True
-        return False
+        for i in range(m):
+            for j in range(n):
+                if backtrack(i, j, 0):
+                    return True
         
+        return False
