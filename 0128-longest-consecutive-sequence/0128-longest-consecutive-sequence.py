@@ -5,11 +5,10 @@ class Solution:
         num_set = set(nums)
         
         for num in nums:
-            curr_len = 1
+            curr_len = 0
             if num-1 not in num_set:
-                while num in num_set:
-                    res = max(res, curr_len)
+                while num + curr_len in num_set:
                     curr_len += 1
-                    num += 1
+                res = max(res, curr_len)
         
         return res
