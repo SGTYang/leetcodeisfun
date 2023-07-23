@@ -2,18 +2,18 @@ class Solution:
     def letterCasePermutation(self, s: str) -> List[str]:
         res = []
 
-        def backtracking(i, word):
-            if i >= len(s):
+        def dfs(i, word):
+            if len(word) == len(s):
                 res.append(word)
                 return
-
+            
             if s[i].isalpha():
                 if s[i].islower():
-                    backtracking(i+1, word+s[i].upper())
+                    dfs(i+1, word+s[i].upper())
                 else:
-                    backtracking(i+1, word+s[i].lower())
-            backtracking(i+1, word+s[i])
+                    dfs(i+1, word+s[i].lower())
+                    
+            dfs(i+1, word+s[i])
         
-        backtracking(0, "")
-        
+        dfs(0, "")
         return res
