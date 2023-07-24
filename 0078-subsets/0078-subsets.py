@@ -1,5 +1,7 @@
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
+        # Time: O(2^n)
+        # Space: O(n)
         
         res = []
         
