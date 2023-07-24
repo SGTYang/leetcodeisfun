@@ -1,27 +1,25 @@
 class Solution:
     def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
-        res = []
-        curr = []
         candidates.sort()
+        res = []
+        visited = set()
         
-        def backtrack(idx, total):
+        def dfs(i, curr, total):
             if total > target:
                 return
-            
             if total == target:
                 res.append(curr.copy())
-                return
             
             prev = -1
-            for i in range(idx, len(candidates)):
-                if prev == candidates[i]:
+            for i in range(i, len(candidates)):
+                if candidates[i] == prev:
                     continue
                 curr.append(candidates[i])
-                
-                backtrack(i+1, total+candidates[i])
+                dfs(i+1, curr, total+candidates[i])
                 curr.pop()
                 
                 prev = candidates[i]
+            
+        dfs(0, [], 0)
         
-        backtrack(0,0)
         return res
