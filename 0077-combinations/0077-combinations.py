@@ -19,7 +19,9 @@ class Solution:
         dfs(1, [])
         
         return res
-    
+        
+        # Time: O(k * n^k)
+        # Space: O(k)
         res = []
         subset = []
         
