@@ -1,16 +1,21 @@
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        # Time: O(2^target)
+        # Space: O(target)
         res = []
-        n = len(candidates)
         
-        def dfs(i, total, curr):
-            if total > target or i >= n:
-                return
+        def dfs(i, cur, total):
             if total == target:
-                res.append(curr.copy())
+                res.append(cur.copy())
                 return
-            for i in range(i, n): 
-                dfs(i, total + candidates[i], curr + [candidates[i]])
+            if i >= len(candidates) or total > target:
+                return
+            
+            cur.append(candidates[i])
+            dfs(i, cur, total + candidates[i])
+            cur.pop()
+            dfs(i+1, cur, total)
+            
+        dfs(0, [], 0)
         
-        dfs(0, 0, [])
         return res
