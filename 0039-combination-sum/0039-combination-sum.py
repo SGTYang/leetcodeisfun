@@ -1,19 +1,16 @@
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
         res = []
-        curr = []
+        n = len(candidates)
         
-        def dfs(i, total):
+        def dfs(i, total, curr):
+            if total > target or i >= n:
+                return
             if total == target:
                 res.append(curr.copy())
                 return
-            if total > target or i >= len(candidates):
-                return
-            
-            curr.append(candidates[i])
-            dfs(i, total+candidates[i])
-            curr.pop()
-            dfs(i+1, total)
+            for i in range(i, n): 
+                dfs(i, total + candidates[i], curr + [candidates[i]])
         
-        dfs(0,0)
+        dfs(0, 0, [])
         return res
