@@ -1,5 +1,7 @@
 class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
+        # Time: O(k * 2^n)
+        # Space: O(k)
         res = []
         
         def dfs(i, bucket):
@@ -16,4 +18,20 @@ class Solution:
             
         dfs(1, [])
         
+        return res
+    
+        res = []
+        subset = []
+        
+        def dfs(idx):
+            if len(subset) == k:
+                res.append(subset.copy())
+                return
+            
+            for i in range(idx, n+1):
+                subset.append(i)
+                dfs(i+1)
+                subset.pop()
+        
+        dfs(1)
         return res
