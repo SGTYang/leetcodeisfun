@@ -1,24 +1,24 @@
 class Solution:
     def permuteUnique(self, nums: List[int]) -> List[List[int]]:
         res = []
-        subset = []
-        count = defaultdict(int)
-        for n in nums:
-            count[n] += 1
+        num_count = defaultdict(int)
         
-        def dfs():
-            if len(subset) == len(nums):
-                res.append(subset.copy())
+        for num in nums:
+            num_count[num] += 1
+        
+        def dfs(bucket):
+            if len(bucket) == len(nums):
+                res.append(bucket.copy())
                 return
             
-            for n in count:
-                if count[n] > 0:
-                    subset.append(n)
-                    count[n] -= 1
+            for n in num_count:
+                if num_count[n] > 0:
+                    num_count[n] -= 1
+                    bucket += [n]
+                    dfs(bucket)
+                    num_count[n] += 1
+                    bucket.pop()
                     
-                    dfs()
-                    
-                    count[n] += 1
-                    subset.pop()
-        dfs()
+        dfs([])
+        
         return res
