@@ -1,62 +1,64 @@
 class TrieNode:
     def __init__(self):
         self.children = {}
-        self.isWord = False
+        self.is_word = False
     
-    def addWord(self, word):
-        cur = self
+    def add(self, word):
+        curr = self
         for c in word:
-            if c not in cur.children:
-                cur.children[c] = TrieNode()
-            cur = cur.children[c]
-        cur.isWord = True
+            if c not in curr.children:
+                curr.children[c] = TrieNode()
+            curr = curr.children[c]
+        curr.is_word = True
     
-    def pruneWord(self, word):
-        cur: TrieNode = self
-        nodeAndChildKey: list[tuple[TrieNode, str]] = []
-        for char in word:
-            nodeAndChildKey.append((cur, char))
-            cur = cur.children[char]
-
-        for parentNode, childKey in reversed(nodeAndChildKey):
-            targetNode = parentNode.children[childKey]
-
-            if len(targetNode.children) == 0:
-                del parentNode.children[childKey]
+    def prune_word(self, word):
+        curr = self
+        node_and_child = []
+        for c in word:
+            node_and_child.append((curr, c))
+            curr = curr.children[c]
+        
+        for i in range(len(node_and_child)-1, -1, -1):
+            p, c = node_and_child[i]
+            target = p.children[c]
+            if len(target.children) == 0:
+                del p.children[c]
             else:
                 return
-
+            
+        
 class Solution:
     def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
         root = TrieNode()
-        for w in words:
-            root.addWord(w)
-            
-        ROWS, COLS = len(board), len(board[0])
-        res, visit = [], set()
         
-        def dfs(r, c, node, word):
-            if (r < 0 or c < 0 or 
-                r == ROWS or c == COLS or
-                board[r][c] not in node.children or (r, c) in visit):
+        for word in words:
+            root.add(word)
+        
+        m, n = len(board), len(board[0])
+        visited = set()
+        res = set()
+        
+        def dfs(i, j, node, word):
+            if i >= m or j >= n or i < 0 or j < 0 or (i, j) in visited or board[i][j] not in node.children:
                 return
+            visited.add((i, j))
+            node = node.children[board[i][j]]
+            word += board[i][j]
             
-            visit.add((r, c))
-            node = node.children[board[r][c]]
-            word += board[r][c]
-            if node.isWord:
-                res.append(word)
-                node.isWord = False
-                root.pruneWord(word)
+            if node.is_word:
+                res.add(word)
+                node.is_word = False
+                root.prune_word(word)
             
-            dfs(r + 1, c, node, word)
-            dfs(r - 1, c, node, word)
-            dfs(r, c + 1, node, word)
-            dfs(r, c - 1, node, word)
-            visit.remove((r, c))
+            dfs(i + 1, j, node, word)
+            dfs(i - 1, j, node, word)
+            dfs(i, j + 1, node, word)
+            dfs(i, j - 1, node, word)
+            
+            visited.remove((i, j))
         
-        for r in range(ROWS):
-            for c in range(COLS):
-                dfs(r, c, root, "")
+        for i in range(m):
+            for j in range(n):
+                dfs(i, j, root, "")
         
-        return res
+        return list(res)
