@@ -1,5 +1,8 @@
 class Solution:
     def letterCasePermutation(self, s: str) -> List[str]:
+        # Time: O(2^num of alphabets + num of numbers)
+        # Space: O(n)
+        
         res = []
 
         def dfs(i, word):
