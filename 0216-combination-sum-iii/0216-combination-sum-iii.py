@@ -1,5 +1,7 @@
 class Solution:
     def combinationSum3(self, k: int, n: int) -> List[List[int]]:
+        # Time: O(k * 9^k)
+        # Space: O(k)
         res = []
         
         def dfs(idx, total, curr):
