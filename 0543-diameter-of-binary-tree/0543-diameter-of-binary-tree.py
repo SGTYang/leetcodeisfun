@@ -13,9 +13,11 @@ class Solution:
                 return 0
             left = dfs(node.left)
             right = dfs(node.right)
-            res[0] = max(res[0], left+right)
+            res[0] = max(left+right, res[0])
             
-            return 1 + max(left, right)
+            return max(left, right) + 1
         
         dfs(root)
         return res[0]
+            
+            
