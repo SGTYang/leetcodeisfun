@@ -1,5 +1,7 @@
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
+        # Time: O(2*n*2^2*n)
+        # Space: O(2*n)
         res = []
         
         def dfs(curr, count):
