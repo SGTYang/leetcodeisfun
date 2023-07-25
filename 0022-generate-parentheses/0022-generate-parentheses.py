@@ -1,21 +1,26 @@
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
         res = []
-        curr = []
         
-        def backtrack(openP,closedP):
-            if openP == closedP == n:
+        def dfs(curr, count):
+            if count[")"] > count["("] or count["("] > n or count[")"] > n:
+                return
+            if count["("] == n and count[")"] == n:
                 res.append("".join(curr))
                 return
+
+            count["("] += 1
+            curr.append("(")
+            dfs(curr, count)
+            count["("] -= 1
+            curr.pop()
             
-            if openP < n:
-                curr.append("(")
-                backtrack(openP+1, closedP)
-                curr.pop()
-            if closedP < openP:
-                curr.append(")")
-                backtrack(openP, closedP+1)
-                curr.pop()
+            count[")"] += 1
+            curr.append(")")
+            dfs(curr, count)
+            curr.pop()
+            count[")"] -= 1
         
-        backtrack(0,0)
+        dfs([], defaultdict(int))
+        
         return res
