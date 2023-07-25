@@ -1,26 +1,26 @@
 class Solution:
     def partition(self, s: str) -> List[List[str]]:
         res = []
-        curr = []
+        part = []
         
-        def backtrack(i):
+        def dfs(i):
             if i >= len(s):
-                res.append(curr.copy())
-                return 
-
-            for j in range(i,len(s)):
-                if isPali(s,i,j):
-                    curr.append(s[i:j+1])
-                    backtrack(j+1)
-                    curr.pop()
+                res.append(part.copy())
+                return
+            for j in range(i, len(s)):
+                if self.is_pali(s, i, j):
+                    part.append(s[i:j+1])
+                    dfs(j + 1)
+                    part.pop()
         
-        def isPali(s,l,r):
-            while l < r:
-                if s[l] != s[r]:
-                    return False
-                l += 1
-                r -= 1
-            return True
-        
-        backtrack(0)
+        dfs(0)
         return res
+    
+    def is_pali(self, s, l, r):
+        while l < r:
+            if s[l] != s[r]:
+                return False
+            l += 1
+            r -= 1
+        
+        return True
