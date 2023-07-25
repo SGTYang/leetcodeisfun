@@ -1,5 +1,6 @@
 class Solution:
     def findTargetSumWays(self, nums: List[int], target: int) -> int:
+        # Time: O(-sum of num ~ sum of num)
         dp = {}
         
         def backtrack(idx, total):
@@ -14,7 +15,8 @@ class Solution:
             return dp[(idx, total)]
         
         return backtrack(0,0)
-    
+        # Time: O(2^n)
+        
         res = [0]
         
         def backtrack(idx, total):
