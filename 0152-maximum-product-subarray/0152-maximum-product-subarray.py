@@ -13,3 +13,19 @@ class Solution:
             res = max(res, maxP)
         
         return res
+    
+        res = max(nums)
+        curr_max = 1
+        curr_min = 1
+        
+        for n in nums:
+            if n == 0:
+                curr_max = 1
+                curr_min = 1
+                continue
+            tmp = curr_max * n
+            curr_max = max(n, curr_max * n, curr_min * n)
+            curr_min = max(n, tmp, curr_min * n)
+            res = max(res, curr_max)
+            
+        return res
