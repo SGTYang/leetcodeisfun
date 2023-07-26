@@ -13,6 +13,7 @@ class Solution:
                 dp[i] += dp[i+2]
         
         return dp[0]
+            
         
         #Recursive
         dp = {len(s):1}
