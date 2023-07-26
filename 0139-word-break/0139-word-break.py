@@ -1,5 +1,7 @@
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        # Time: O(n^2)
+        # Space: O(n)
         dp = [False] * (len(s) + 1)
         dp[len(s)] = True
         
