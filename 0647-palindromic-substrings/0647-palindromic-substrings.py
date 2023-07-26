@@ -1,7 +1,9 @@
 class Solution:
     def countSubstrings(self, s: str) -> int:
+        # Time: O(n^2)
+        # Space: O(1)
         res = 0
-        
+    
         for i in range(len(s)):
             l,r = i, i
             while l >= 0 and r < len(s) and s[l] == s[r]:
