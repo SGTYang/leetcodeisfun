@@ -1,5 +1,7 @@
 class Solution:
     def longestPalindrome(self, s: str) -> str:
+        # Time: O(n ^ 2)
+        # Space: O(1)
         max_len = 0
         res = ""
         for i in range(len(s)):
