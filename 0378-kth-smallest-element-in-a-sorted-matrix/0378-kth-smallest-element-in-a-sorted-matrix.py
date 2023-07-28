@@ -1,10 +1,10 @@
 class Solution:
     def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
         n = len(matrix)
-        l, r = matrix[0][0], matrix[n-1][n-1]
+        left, right = matrix[0][0], matrix[n-1][n-1]
         
-        while l < r:
-            mid = (l+r)//2
+        while left < right:
+            mid = (left + right) // 2
             
             cnt = 0
             for i in range(n):
@@ -13,11 +13,11 @@ class Solution:
                         cnt += 1
             
             if cnt >= k:
-                r = mid
+                right = mid
             else:
-                l = mid + 1 
-            
-        return l
+                left = mid + 1
+        
+        return left
     
         n = len(matrix)
         left, right = matrix[0][0], matrix[n-1][n-1]
