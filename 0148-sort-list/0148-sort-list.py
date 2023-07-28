@@ -8,41 +8,42 @@ class Solution:
         if not head or not head.next:
             return head
         
-        # split the node
-        left = head
-        right = self.get_mid(head)
-        tmp = right.next
+        left, right = head, self.get_mid(head)
+        tmp = right.next 
         right.next = None
         right = tmp
+        
         left = self.sortList(left)
         right = self.sortList(right)
-        # merge
+        
         return self.merge(left, right)
     
+    # Split
     def get_mid(self, node):
         slow, fast = node, node.next
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
-        
+
         return slow
-    
-    def merge(self, left, right):
+        
+    def merge(self, node1, node2):
         dummy = ListNode()
         curr = dummy
-        
-        while left and right:
-            if left.val < right.val:
-                curr.next = left
-                left = left.next
+
+        while node1 and node2:
+            if node1.val > node2.val:
+                curr.next = node2
+                curr = curr.next
+                node2 = node2.next
             else:
-                curr.next = right
-                right = right.next
-            curr = curr.next
-        
-        if left:
-            curr.next = left
-        if right:
-            curr.next = right
-        
+                curr.next = node1
+                curr = curr.next
+                node1 = node1.next
+
+        if node1:
+            curr.next = node1
+        if node2:
+            curr.next = node2
+
         return dummy.next
