@@ -1,20 +1,24 @@
 class Solution:
     def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
         n = len(matrix)
-        l, r = matrix[0][0], matrix[n-1][n-1]
+        left, right = matrix[0][0], matrix[n-1][n-1]
         
-        while l < r:
-            mid = (l+r)//2
+        while left < right:
+            mid = (left + right) // 2
             
-            cnt = 0
-            for i in range(n):
-                for j in range(n):
-                    if matrix[i][j] <= mid:
-                        cnt += 1
+            count = 0
+            row, col = n - 1, 0
             
-            if cnt >= k:
-                r = mid
+            while row >= 0 and col < n:
+                if matrix[row][col] > mid:
+                    row -= 1
+                else:
+                    count += row + 1
+                    col += 1
+
+            if count < k:
+                left = mid + 1
             else:
-                l = mid + 1 
-            
-        return l
+                right = mid
+        
+        return left
