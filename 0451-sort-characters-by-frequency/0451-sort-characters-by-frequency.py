@@ -1,18 +1,14 @@
 class Solution:
     def frequencySort(self, s: str) -> str:
-        k = len(s)
-        count = defaultdict(int)
-        freq = [[] for i in range(k+1)]
+        buckets = [[] for i in range(len(s) + 1)]
         res = ""
+        s_cnt = Counter(s)
         
-        for c in s:
-            count[c] += 1
+        for c,f in s_cnt.items():
+            buckets[f].append(c)
         
-        for c, cnt in count.items():
-            freq[cnt].append(c)
-        
-        for i in range(len(freq)-1,-1,-1):
-            for n in freq[i]:
-                res += n*i
+        for freq in range(len(buckets)-1, -1, -1):
+            for char in buckets[freq]:
+                res += char * freq
         
         return res
