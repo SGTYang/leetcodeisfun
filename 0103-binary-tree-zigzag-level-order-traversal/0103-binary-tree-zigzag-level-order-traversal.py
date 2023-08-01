@@ -9,27 +9,21 @@ class Solution:
         if not root:
             return []
         res = []
-        que = deque([root])
-        left_to_right = True
-        
+        que = deque([(root, 1)])
         while que:
-            curr = []
-            
-            for _ in range(len(que)):
-                node = que.popleft()
-                
-                if left_to_right:
-                    curr.append(node.val)
-                else:
-                    curr = [node.val] + curr
-                    
+            n = len(que)
+            level_node = []
+            for _ in range(n):
+                node, level = que.popleft()
+                level_node.append(node.val)
                 if node.left:
-                    que.append(node.left)
+                    que.append((node.left, level + 1))
                 if node.right:
-                    que.append(node.right)
-                    
-            left_to_right = not left_to_right
-            res.append(curr)    
+                    que.append((node.right, level + 1))
+            
+            if level % 2 == 0:
+                res.append(level_node[::-1])
+            else:
+                res.append(level_node)
         
         return res
-        
