@@ -8,12 +8,12 @@ class Solution:
                 return mid
             
             if nums[left] <= nums[mid]:
-                if target > nums[mid] or nums[left] > target:
+                if nums[mid] < target or nums[left] > target:
                     left = mid + 1
                 else:
                     right = mid - 1
             else:
-                if target < nums[mid] or target > nums[right]:
+                if nums[mid] > target or nums[right] < target:
                     right = mid - 1
                 else:
                     left = mid + 1
