@@ -1,6 +1,6 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        prereq = {c:[] for c in range(numCourses)}
+        prereq = defaultdict(list)
         
         for cor, pre in prerequisites:
             prereq[cor].append(pre)
@@ -12,14 +12,12 @@ class Solution:
                 return False
             if prereq[course] == []:
                 return True
-            
             visited.add(course)
-            
             for pre in prereq[course]:
                 if not dfs(pre):
                     return False
-                
             visited.remove(course)
+            
             prereq[course] = []
             
             return True
@@ -28,4 +26,3 @@ class Solution:
             if not dfs(i):
                 return False
         return True
-            
