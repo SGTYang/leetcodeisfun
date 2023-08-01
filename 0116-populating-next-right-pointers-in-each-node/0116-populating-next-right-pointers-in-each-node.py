@@ -11,21 +11,18 @@ class Node:
 class Solution:
     def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
         if not root:
-            return root
-        
+            return None
         que = deque([root])
-        res = []
-        
         while que:
-            prev = []
-            for _ in range(len(que)):
+            n = len(que)
+            level_node = []
+            for i in range(n):
                 node = que.popleft()
-                
-                if len(prev) != 0:
-                    prev_node = prev.pop()
-                    prev_node.next = node
+                if len(level_node) != 0:
+                    prev = level_node.pop()
+                    prev.next = node
                     
-                prev.append(node)
+                level_node.append(node)
                 
                 if node.left:
                     que.append(node.left)
