@@ -21,21 +21,21 @@ class Solution:
                 return curr.val
             curr = curr.right
         
-#         # Recursive
-#         res = []
+        # Recursive
+        res = []
         
-#         def dfs(node):
-#             if not node:
-#                 return
-#             dfs(node.left)
+        def dfs(node):
+            if not node:
+                return
+            dfs(node.left)
             
-#             if len(res) == k:
-#                 return
+            if len(res) == k:
+                return
             
-#             res.append(node.val)
+            res.append(node.val)
 
-#             dfs(node.right)
+            dfs(node.right)
         
-#         dfs(root)
-#         print(res)
-#         return res[-1]
+        dfs(root)
+        print(res)
+        return res[-1]
