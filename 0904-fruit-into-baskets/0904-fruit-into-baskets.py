@@ -8,11 +8,10 @@ class Solution:
             basket[fruits[right]] += 1
             total += 1
             while len(basket) > 2:
-                curr = fruits[left]
-                basket[curr] -= 1
+                basket[fruits[left]] -= 1
                 total -= 1
-                if basket[curr] == 0:
-                    basket.pop(curr)
+                if basket[fruits[left]] == 0:
+                    basket.pop(fruits[left])
                 left += 1
             res = max(res, total)
         
