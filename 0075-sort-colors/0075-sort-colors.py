@@ -3,16 +3,15 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        red, white ,blue = 0, 0, len(nums)-1
+        # Bucket Sort
+        bucket = [0] * 3
         
-        while white <= blue:
-            if nums[white] == 0:
-                nums[red], nums[white] = nums[white], nums[red]
-                white += 1
-                red += 1
-            elif nums[white] == 1:
-                white += 1
-            else:
-                nums[white], nums[blue] = nums[blue], nums[white]
-                blue -= 1
-            
+        for num in nums:
+            bucket[num] += 1
+        
+        left = 0
+        for i in range(len(bucket)):
+            right = left + bucket[i]
+            for j in range(left, right):
+                nums[j] = i
+            left = right
