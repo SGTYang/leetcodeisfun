@@ -6,6 +6,8 @@
 #         self.right = right
 class Solution:
     def pathSum(self, root: Optional[TreeNode], targetSum: int) -> int:
+        # Time: O(n^2)
+        # Space: O(n)
         res = [0]
         
         def dfs(node, history):
