@@ -22,7 +22,7 @@ class Solution:
             
             dfs_parent(node.left, node)
             dfs_parent(node.right, node)
-            
+        
         def dfs_dist(node, distance):
             if not node or node.val in visited:
                 return
@@ -31,9 +31,9 @@ class Solution:
             if distance == k:
                 res.append(node.val)
             
-            dfs_dist(node.left, distance+1)
-            dfs_dist(node.right, distance+1)
-            dfs_dist(history[node], distance+1)
+            dfs_dist(node.left, distance + 1)
+            dfs_dist(node.right, distance + 1)
+            dfs_dist(history[node], distance + 1)
             
             return
         
@@ -41,4 +41,3 @@ class Solution:
         dfs_dist(target, 0)
         
         return res
-                
