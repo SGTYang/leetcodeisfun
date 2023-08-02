@@ -1,33 +1,23 @@
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
+        # Time: O(n! * n)
+        # Space: O(n!)
         res = []
+        visited = set()
         
-        def dfs(bucket, visited):
-            if len(bucket) == len(nums):
-                res.append(bucket.copy())
+        def dfs(idx, curr):
+            if len(curr) == len(nums):
+                res.append(curr.copy())
                 return
-            
             for i in range(len(nums)):
-                if nums[i] not in visited:
-                    visited.add(nums[i])
-                    dfs(bucket + [nums[i]], visited)
-                    visited.remove(nums[i])
-                    
-        dfs([], set())
+                if i not in visited:
+                    visited.add(i)
+                    curr.append(nums[i])
+                    dfs(i, curr)
+                    curr.pop()
+                    visited.remove(i)
+            
+            return
+        
+        dfs(0, [])
         return res
-    
-#         res = []
-#         if len(nums) == 1:
-#             return [nums[:]]
-        
-#         for i in range(len(nums)):
-#             num = nums.pop(0)
-            
-#             perms = self.permute(nums)
-            
-#             for p in perms:
-#                 p.append(num)
-#             res.extend(perms)
-#             nums.append(num)
-        
-#         return res
