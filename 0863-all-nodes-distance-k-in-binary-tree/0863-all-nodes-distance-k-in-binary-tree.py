@@ -9,34 +9,28 @@ class Solution:
     def distanceK(self, root: TreeNode, target: TreeNode, k: int) -> List[int]:
         if not root:
             return []
-        
-        history = {}
         res = []
-        visited = set()
-        
-        def dfs_parent(node, parent):
+        history = {}
+        def dfs_parent(node, prev):
             if not node:
                 return
-            
-            history[node] = parent
+            history[node] = prev
             
             dfs_parent(node.left, node)
             dfs_parent(node.right, node)
         
+        visited = set()
         def dfs_dist(node, distance):
-            if not node or node.val in visited:
+            if not node or node in visited:
                 return
-            visited.add(node.val)
-            
             if distance == k:
                 res.append(node.val)
+            visited.add(node)
             
             dfs_dist(node.left, distance + 1)
             dfs_dist(node.right, distance + 1)
-            dfs_dist(history[node], distance + 1)
+            dfs_dist(history[node], distance +1)
             
-            return
-        
         dfs_parent(root, None)
         dfs_dist(target, 0)
         
