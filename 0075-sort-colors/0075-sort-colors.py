@@ -4,17 +4,17 @@ class Solution:
         Do not return anything, modify nums in-place instead.
         """
         # Partition with two pointers
-        i, left, right = 0, 0, len(nums) - 1
-        while i <= right:
-            if nums[i] == 0:
-                nums[i], nums[left] = nums[left], nums[i]
-                left += 1
-            elif nums[i] == 2:
-                nums[i], nums[right] = nums[right], nums[i]
-                right -= 1
-                i -= 1
-            i += 1
+        left, right, pointer = 0, len(nums) - 1, 0
         
+        while pointer <= right:
+            if nums[pointer] == 0:
+                nums[pointer], nums[left] = nums[left], nums[pointer]
+                left += 1
+            elif nums[pointer] == 2:
+                nums[pointer], nums[right] = nums[right], nums[pointer]
+                right -= 1
+                pointer -= 1
+            pointer += 1
         
 #         # Bucket Sort
 #         bucket = [0] * 3
