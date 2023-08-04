@@ -1,17 +1,16 @@
 class Solution:
     def maxUniqueSplit(self, s: str) -> int:
-        seen = set()
+        visited = set()
         
-        def backtrack(i):
-            res = 0
+        def dfs(idx):
+            cnt = 0
+            for i in range(idx + 1, len(s) + 1):
+                if s[idx:i] in visited:
+                    continue
+                visited.add(s[idx:i])
+                cnt = max(cnt, dfs(i) + 1)
+                visited.remove(s[idx:i])
             
-            if i < len(s):
-                for i_idx in range(i+1, len(s)+1):
-                    if s[i:i_idx] not in seen:
-                        seen.add(s[i:i_idx])
-                        res = max(res, 1 + backtrack(i_idx))
-                        seen.remove(s[i:i_idx])
-            
-            return res
+            return cnt
         
-        return backtrack(0)
+        return dfs(0)
