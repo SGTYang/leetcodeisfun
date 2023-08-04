@@ -1,6 +1,7 @@
 class Solution:
-    def longestSubarray(self, nums: List[int]) -> int:    
-        left = 0
+    def longestSubarray(self, nums: List[int]) -> int:
+        k = 1
+        left, right = 0, 0
         res = 0
         cnt = 0
         
