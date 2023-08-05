@@ -4,25 +4,23 @@ class Solution:
         # Space: O(2*n)
         res = []
         
-        def dfs(curr, count):
-            if count[")"] > count["("] or count["("] > n or count[")"] > n:
-                return
-            if count["("] == n and count[")"] == n:
+        def dfs(curr, cnt):
+            if cnt["("] == n and cnt[")"] == n:
                 res.append("".join(curr))
                 return
-
-            count["("] += 1
+            if cnt[")"] > n or cnt["("] < cnt[")"] or cnt["("] > n:
+                return
             curr.append("(")
-            dfs(curr, count)
-            count["("] -= 1
+            cnt["("] += 1
+            dfs(curr, cnt)
             curr.pop()
+            cnt["("] -= 1
             
-            count[")"] += 1
             curr.append(")")
-            dfs(curr, count)
+            cnt[")"] += 1
+            dfs(curr, cnt)
             curr.pop()
-            count[")"] -= 1
+            cnt[")"] -= 1
         
         dfs([], defaultdict(int))
-        
         return res
