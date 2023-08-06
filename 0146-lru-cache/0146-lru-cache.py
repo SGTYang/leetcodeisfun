@@ -1,55 +1,46 @@
+class Node:
+    def __init__(self, key, val):
+        self.key = key
+        self.val = val
+        self.prev = None
+        self.next = None
+        
 class LRUCache:
-    class Node:
-        def __init__(self, key, val):
-            self.key = key
-            self.val = val
-            self.prev = None
-            self.next = None
 
     def __init__(self, capacity: int):
         self.cap = capacity
-        self.head = self.Node(-1, -1)
-        self.tail = self.Node(-1, -1)
-        self.head.next = self.tail
-        self.tail.prev = self.head
-        self.m = {}
-
-    def addNode(self, newnode):
-        temp = self.head.next
-        newnode.next = temp
-        newnode.prev = self.head
-        self.head.next = newnode
-        temp.prev = newnode
-
-    def deleteNode(self, delnode):
-        prevv = delnode.prev
-        nextt = delnode.next
-        prevv.next = nextt
-        nextt.prev = prevv
-
+        self.cache = {}
+        
+        self.left, self.right = Node(0, 0), Node(0, 0)
+        self.left.next = self.right
+        self.right.prev = self.left
+    
+    def remove(self, node):
+        prev, nxt = node.prev, node.next
+        prev.next, nxt.prev = nxt, prev
+        
+    def insert(self, node):
+        prev, nxt = self.right.prev, self.right
+        prev.next = nxt.prev = node
+        node.next, node.prev = nxt, prev
+    
     def get(self, key: int) -> int:
-        if key in self.m:
-            resNode = self.m[key]
-            ans = resNode.val
-            del self.m[key]
-            self.deleteNode(resNode)
-            self.addNode(resNode)
-            self.m[key] = self.head.next
-            return ans
+        if key in self.cache:
+            self.remove(self.cache[key])
+            self.insert(self.cache[key])
+            return self.cache[key].val
         return -1
 
     def put(self, key: int, value: int) -> None:
-        if key in self.m:
-            curr = self.m[key]
-            del self.m[key]
-            self.deleteNode(curr)
-
-        if len(self.m) == self.cap:
-            del self.m[self.tail.prev.key]
-            self.deleteNode(self.tail.prev)
-
-        self.addNode(self.Node(key, value))
-        self.m[key] = self.head.next
+        if key in self.cache:
+            self.remove(self.cache[key])
+        self.cache[key] = Node(key, value)
+        self.insert(self.cache[key])
+        
+        if len(self.cache) > self.cap:
+            lru = self.left.next
+            self.remove(lru)
+            del self.cache[lru.key]
 
 
 # Your LRUCache object will be instantiated and called as such:
