@@ -6,6 +6,8 @@
 #         self.right = right
 class Solution:
     def invertTree(self, root):
+        if not root:
+            return root
         que = deque([root])
         while que:
             node = que.popleft()
