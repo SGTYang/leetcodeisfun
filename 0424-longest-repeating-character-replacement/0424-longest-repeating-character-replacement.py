@@ -1,16 +1,12 @@
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
-        count = defaultdict(int)
-        left = 0
+        l = 0
         res = 0
-        
-        for right in range(len(s)):
-            count[s[right]] += 1
-            
-            while right - left + 1 - max(count.values()) > k:
-                count[s[left]] -= 1
-                left += 1
-            
-            res = max(res, right - left + 1)
-
+        count = defaultdict(int)
+        for r in range(len(s)):
+            count[s[r]] += 1
+            while r - l + 1 - max(count.values()) > k:
+                count[s[l]] -= 1
+                l += 1
+            res = max(res, r - l + 1)
         return res
