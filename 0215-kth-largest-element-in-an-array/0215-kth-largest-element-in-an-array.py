@@ -3,23 +3,10 @@ class Solution:
         # Time: O(n)
         # Quick select
         
-        k = len(nums) - k # Kth largest
-        
-        def quick_select(left, right):
-            pivot, pointer = nums[right], left
-            
-            for i in range(left, right):
-                if nums[i] <= pivot:
-                    nums[i], nums[pointer] = nums[pointer], nums[i]
-                    pointer += 1
-            
-            nums[right], nums[pointer] = nums[pointer], nums[right]
-            
-            if k > pointer:
-                return quick_select(pointer + 1, right)
-            elif k < pointer:
-                return quick_select(left, pointer - 1)
-            else:
-                return nums[pointer]
-        
-        return quick_select(0, len(nums) - 1)
+        # Time: O(klogn)
+        max_heap = [-num for num in nums]
+        heapq.heapify(max_heap)
+        while k:
+            res = heapq.heappop(max_heap)
+            k -= 1
+        return -res
