@@ -4,16 +4,15 @@ class Solution:
         # Space: O(n)
         
         res = []
-        
-        def dfs(i, subset):
-            if i >= len(nums):
-                res.append(subset.copy())
+        curr = []
+        def dfs(idx):
+            if idx == len(nums):
+                res.append(curr.copy())
                 return
-            
-            subset += [nums[i]]
-            dfs(i+1, subset)
-            subset.pop()
-            dfs(i+1, subset)
-            
-        dfs(0, [])
+            curr.append(nums[idx])
+            dfs(idx + 1)
+            curr.pop()
+            dfs(idx + 1)
+        
+        dfs(0)
         return res
