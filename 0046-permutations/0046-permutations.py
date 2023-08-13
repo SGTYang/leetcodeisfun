@@ -4,20 +4,21 @@ class Solution:
         # Space: O(n!)
         res = []
         visited = set()
-        
-        def dfs(idx, curr):
+        curr = []
+        def dfs():
             if len(curr) == len(nums):
                 res.append(curr.copy())
                 return
-            for i in range(len(nums)):
-                if i not in visited:
-                    visited.add(i)
-                    curr.append(nums[i])
-                    dfs(i, curr)
-                    curr.pop()
-                    visited.remove(i)
             
-            return
+            for num in nums:
+                if num not in visited:
+                    visited.add(num)
+                    curr.append(num)
+                    dfs()
+                    visited.remove(num)
+                    curr.pop()
+        dfs()
         
-        dfs(0, [])
         return res
+            
+            
