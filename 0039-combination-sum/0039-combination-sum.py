@@ -2,20 +2,23 @@ class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
         # Time: O(2^target)
         # Space: O(target)
+        
         res = []
-        
-        def dfs(i, cur, total):
+        curr = []
+        def dfs(idx, total):
             if total == target:
-                res.append(cur.copy())
+                res.append(curr.copy())
                 return
-            if i >= len(candidates) or total > target:
+            if total > target:
                 return
             
-            cur.append(candidates[i])
-            dfs(i, cur, total + candidates[i])
-            cur.pop()
-            dfs(i+1, cur, total)
-            
-        dfs(0, [], 0)
+            for i in range(idx, len(candidates)):
+                curr.append(candidates[i])
+                dfs(i, total + candidates[i])
+                curr.pop()
         
+        for i in range(len(candidates)):
+            curr.append(candidates[i])
+            dfs(i, candidates[i])
+            curr.pop()
         return res
