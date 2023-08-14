@@ -1,19 +1,19 @@
 class Solution:
     def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
-        ans = 0
-        m,n = len(grid), len(grid[0])
+        res = 0
+        m, n = len(grid), len(grid[0])
         
-        def dfs(y,x,island):
-            if y>=m or x>=n or y<0 or x<0 or grid[y][x]==0:
+        def dfs(i, j):
+            if i < 0 or j < 0 or i >= m or j >= n or grid[i][j] == 0:
                 return 0
             
-            grid[y][x] = 0
+            grid[i][j] = 0
+            res = dfs(i + 1, j) + dfs(i - 1, j) + dfs(i, j - 1) + dfs(i, j + 1) + 1
             
-            return dfs(y-1,x,island+1)+dfs(y+1,x,island+1)+dfs(y,x-1,island+1)+dfs(y,x+1,island+1)+1
+            return res
         
         for i in range(m):
             for j in range(n):
-                if grid[i][j] == 1:
-                    ans = max(ans,dfs(i,j,0))
-        
-        return ans
+                res = max(res, dfs(i, j))
+    
+        return res
