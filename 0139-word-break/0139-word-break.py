@@ -19,7 +19,6 @@ class Solution:
         for i in range(len(s)+1):
             for word in wordDict:
                 if i - len(word) >= 0 and s[i - len(word):i] == word:
-                    print(s[i - len(word) : i])
                     dp[i] = dp[i - len(word)]
                 if dp[i]:
                     break
