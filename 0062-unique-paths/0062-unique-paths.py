@@ -3,10 +3,12 @@ class Solution:
         # Time: O(m * n)
         # Space: O(m * n)
         
-        row = [1] * n
+        row = [1] * (n + 1)
+        
         for i in range(m - 1):
-            new_row = [1] * n
-            for j in range(n - 2, -1, -1):
-                new_row[j] = new_row[j + 1] + row[j]
-            row = new_row
+            tmp_row = [0] * (n + 1)
+            for j in range(n - 1, -1, -1):
+                tmp_row[j] = tmp_row[j + 1] + row[j]
+            row = tmp_row
+        
         return row[0]
