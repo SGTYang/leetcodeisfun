@@ -7,13 +7,9 @@
 class Solution:
     def invertTree(self, root):
         if not root:
-            return root
-        que = deque([root])
-        while que:
-            node = que.popleft()
-            if node:
-                node.left, node.right = node.right, node.left
-                que.append(node.left)
-                que.append(node.right)
+            return None
+        root.left, root.right = root.right, root.left
+        root.left = self.invertTree(root.left)
+        root.right = self.invertTree(root.right)
         
         return root
