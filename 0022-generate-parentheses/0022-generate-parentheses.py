@@ -3,24 +3,21 @@ class Solution:
         # Time: O(2*n*2^2*n)
         # Space: O(2*n)
         res = []
+        stack = []
         
-        def dfs(curr, cnt):
-            if cnt["("] == n and cnt[")"] == n:
-                res.append("".join(curr))
-                return
-            if cnt[")"] > n or cnt["("] < cnt[")"] or cnt["("] > n:
-                return
-            curr.append("(")
-            cnt["("] += 1
-            dfs(curr, cnt)
-            curr.pop()
-            cnt["("] -= 1
+        def dfs(open_p, close_p):
+            if open_p == close_p == n:
+                res.append("".join(stack))
             
-            curr.append(")")
-            cnt[")"] += 1
-            dfs(curr, cnt)
-            curr.pop()
-            cnt[")"] -= 1
+            if open_p < n:
+                stack.append("(")
+                dfs(open_p + 1, close_p)
+                stack.pop()
+                
+            if close_p < open_p:
+                stack.append(")")
+                dfs(open_p, close_p + 1)
+                stack.pop()
         
-        dfs([], defaultdict(int))
+        dfs(0, 0)
         return res
