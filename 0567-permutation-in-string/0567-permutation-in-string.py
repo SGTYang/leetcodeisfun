@@ -1,24 +1,23 @@
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
-        if len(s1) > len(s2):
-            return False
         s1_count = defaultdict(int)
-        s2_count = defaultdict(int)
+        window_dict = defaultdict(int)
         
-        for i in range(len(s1)):
-            s1_count[s1[i]] += 1
-            s2_count[s2[i]] += 1
-        
-        if s1_count == s2_count:
-                return True
+        for c in s1:
+            s1_count[c] += 1
         
         l = 0
-        for r in range(len(s1), len(s2)):
-            s2_count[s2[r]] += 1
-            s2_count[s2[l]] -= 1
-            if s2_count[s2[l]] == 0:
-                del s2_count[s2[l]]
-            l += 1
-            if s1_count == s2_count:
-                return True
+        for r in range(len(s2)):
+            if s2[r] in s1_count:
+                window_dict[s2[r]] += 1
+            
+            if r - l + 1 == len(s1): 
+                if s1_count == window_dict:
+                    return True
+                
+                if s2[l] in window_dict:
+                    window_dict[s2[l]] -= 1
+                    
+                l += 1
+        
         return False
