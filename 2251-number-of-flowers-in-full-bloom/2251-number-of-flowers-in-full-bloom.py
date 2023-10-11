@@ -1,23 +1,22 @@
 class Solution:
     def fullBloomFlowers(self, flowers: List[List[int]], people: List[int]) -> List[int]:
-        flowers.sort()
-
-        people = [(peop, idx) for idx, peop in enumerate(people)]
-        people.sort()
-
-        ldx = 0
-        curr_bloom_end = []
-
-        res = [0]*len(people)
-
-        for peop, idx in people:
-            while ldx < len(flowers) and flowers[ldx][0] <= peop:
-                if flowers[ldx][1] >= peop:
-                    heapq.heappush(curr_bloom_end, flowers[ldx][1])
-                ldx += 1
+        people = [(p, i) for i, p in enumerate(people)]
+        res = [0] * len(people)
+        count = 0
+        start_heap = [f[0] for f in flowers]
+        end_heap = [f[1] for f in flowers]
+        heapq.heapify(start_heap)
+        heapq.heapify(end_heap)
+        
+        for p, i in sorted(people):
+            while start_heap and start_heap[0] <= p:
+                heapq.heappop(start_heap)
+                count += 1
             
-            while curr_bloom_end and curr_bloom_end[0] < peop:
-                heapq.heappop(curr_bloom_end)
-                
-            res[idx] = len(curr_bloom_end)
+            while end_heap and end_heap[0] < p:
+                heapq.heappop(end_heap)
+                count -= 1
+            
+            res[i] = count
+        
         return res
