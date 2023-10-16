@@ -8,22 +8,20 @@ class Solution:
         if len(lists) == 0:
             return None
         
-        def merge_list(l1, l2):
+        def merge(l1, l2):
             dummy = ListNode(0)
             curr = dummy
-            while l1 and l2:
-                if l1.val < l2.val:
-                    curr.next = l1
-                    curr = curr.next
-                    l1 = l1.next
-                else:
+
+            while l1 or l2:
+                l1_val = l1.val if l1 else float('inf')
+                l2_val = l2.val if l2 else float('inf')
+                if l1_val > l2_val:
                     curr.next = l2
-                    curr = curr.next
-                    l2 = l2.next
-            if l1:
-                curr.next = l1
-            if l2:
-                curr.next = l2
+                    l2 = l2.next if l2 else None
+                else:
+                    curr.next = l1
+                    l1 = l1.next if l1 else None
+                curr = curr.next
             
             return dummy.next
         
@@ -31,10 +29,10 @@ class Solution:
             merged_list = []
             for i in range(0, len(lists), 2):
                 l1 = lists[i]
-                l2 = lists[i+1] if i + 1 < len(lists) else None
-                
-                merged_list.append(merge_list(l1, l2))
+                l2 = lists[i + 1] if i + 1 < len(lists) else None
+                merged_list.append(merge(l1, l2))
             
             lists = merged_list
         
         return lists[0]
+            
