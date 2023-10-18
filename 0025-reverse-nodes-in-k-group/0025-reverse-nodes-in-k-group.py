@@ -34,4 +34,3 @@ class Solution:
             tail = tmp
         
         return dummy.next
-            
