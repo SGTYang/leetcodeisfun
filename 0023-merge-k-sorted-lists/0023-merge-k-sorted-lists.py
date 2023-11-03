@@ -31,10 +31,12 @@ class Solution:
             return dummy.next
         
         while len(lists) > 1:
-            l1 = lists.pop()
-            l2 = lists.pop() if lists else None
-            lists.append(merge(l1, l2))
+            dummy_list = []
+            for i in range(0, len(lists), 2):
+                l1 = lists[i]
+                l2 = lists[i + 1] if i + 1 < len(lists) else None
+                dummy_list.append(merge(l1, l2))
+            
+            lists = dummy_list
         
         return lists[0] if lists else None
-            
-            
