@@ -12,6 +12,7 @@ class Solution:
             
             left = dfs(node.left, max(curr_max, node.val))
             right = dfs(node.right, max(curr_max, node.val))
+            
             curr = 1 if node.val >= curr_max else 0
             return left + right + curr
         
