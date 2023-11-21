@@ -1,4 +1,4 @@
-class Trie:
+class TrieNode:
     def __init__(self):
         self.children = {}
         self.is_word = False
@@ -7,57 +7,42 @@ class Trie:
         trie = self
         for c in word:
             if c not in trie.children:
-                trie.children[c] = Trie()
+                trie.children[c] = TrieNode()
             trie = trie.children[c]
         trie.is_word = True
-    
-    def prune_word(self, word):
-        curr = self
-        node_and_child = []
-        for c in word:
-            node_and_child.append((curr, c))
-            curr = curr.children[c]
-        
-        for i in range(len(node_and_child)-1, -1, -1):
-            parent, child = node_and_child[i]
-            target = parent.children[child]
-            if len(target.children) == 0:
-                del parent.children[child]
-            else:
-                return
+
         
 class Solution:
     def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
-        m, n = len(board), len(board[0])
-        trie = Trie()
+        t = TrieNode()
+        row, col = len(board), len(board[0])
         for word in words:
-            trie.add(word)
+            t.add(word)
+            
         visited = set()
         res = set()
         
-        def dfs(i, j, node, word):
-            if i < 0 or j < 0 or i >= m or j >= n or (i, j) in visited or board[i][j] not in node.children:
+        def dfs(i, j, trie, word):
+            if i < 0 or j < 0 or i >= row or j >= col or (i, j) in visited or board[i][j] not in trie.children:
                 return
-        
+            
             visited.add((i, j))
-            node = node.children[board[i][j]]
-            word += board[i][j]
+            trie = trie.children[board[i][j]]
+            word = word + board[i][j]
             
-            if node.is_word:
+            if trie.is_word:
                 res.add(word)
-                node.is_word = False
-                trie.prune_word(word)
+                trie.is_word = False
             
-            dfs(i + 1, j, node, word)
-            dfs(i - 1, j, node, word)
-            dfs(i, j - 1, node, word)
-            dfs(i, j + 1, node, word)
+            dfs(i - 1, j, trie, word)
+            dfs(i + 1, j, trie, word)
+            dfs(i, j - 1, trie, word)
+            dfs(i, j + 1, trie, word)
             
             visited.remove((i, j))
-        
-        for i in range(m):
-            for j in range(n):
-                dfs(i, j, trie, "")
-        
-        return list(res)
             
+        for i in range(row):
+            for j in range(col):
+                dfs(i, j, t, "")
+                
+        return list(res)
