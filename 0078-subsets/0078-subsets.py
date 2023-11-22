@@ -9,6 +9,7 @@ class Solution:
             if idx == len(nums):
                 res.append(curr.copy())
                 return
+            
             curr.append(nums[idx])
             dfs(idx + 1)
             curr.pop()
