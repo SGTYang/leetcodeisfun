@@ -3,22 +3,19 @@ class Solution:
         # Time: O(n! * n)
         # Space: O(n!)
         res = []
-        visited = set()
-        curr = []
-        def dfs():
+        def dfs(idx, curr, visited):
             if len(curr) == len(nums):
                 res.append(curr.copy())
                 return
             
-            for num in nums:
-                if num not in visited:
-                    visited.add(num)
-                    curr.append(num)
-                    dfs()
-                    visited.remove(num)
+            for i in range(len(nums)):
+                if i not in visited:
+                    curr.append(nums[i])
+                    visited.add(i)
+                    dfs(i, curr, visited)
                     curr.pop()
-        dfs()
+                    visited.remove(i)
+        
+        dfs(0, [], set())
         
         return res
-            
-            
