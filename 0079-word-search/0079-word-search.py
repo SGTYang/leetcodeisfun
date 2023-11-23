@@ -4,31 +4,25 @@ class Solution:
         # Time: O(n * m) * dfs -> O(n * m * 4^len(word)) 
         # The call stack of dfs is going to be len(word)
         # So 4^len(word)
-        
+        rows, cols = len(board), len(board[0])
         visited = set()
-        m, n = len(board), len(board[0])
         
-        def backtrack(i,j, idx):
+        def dfs(i, j, idx):
             if idx == len(word):
                 return True
-            
-            if (i,j) in visited or i >= m or j >= n or i < 0 or j < 0 or board[i][j] != word[idx]:
+            if i < 0 or j < 0 or i >= rows or j >= cols or board[i][j] != word[idx] or (i, j) in visited:
                 return False
+            visited.add((i, j))
             
-            visited.add((i,j))
-            
-            res = (backtrack(i + 1, j, idx+1) or
-                backtrack(i - 1, j, idx+1) or
-                backtrack(i, j - 1, idx+1) or
-                backtrack(i, j + 1, idx+1))
-            
-            visited.remove((i,j))
-            
+            res = (dfs(i + 1, j, idx + 1) or
+                   dfs(i - 1, j, idx + 1) or
+                   dfs(i, j + 1, idx + 1) or 
+                   dfs(i, j - 1, idx + 1))
+            visited.remove((i, j))
             return res
         
-        for i in range(m):
-            for j in range(n):
-                if backtrack(i, j, 0):
+        for i in range(rows):
+            for j in range(cols):
+                if dfs(i, j, 0):
                     return True
-        
         return False
