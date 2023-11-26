@@ -3,30 +3,28 @@ class Solution:
         """
         Do not return anything, modify board in-place instead.
         """
-        m, n = len(board), len(board[0])
+        rows, cols = len(board), len(board[0])
+        
         def dfs(i, j):
-            if i < 0 or j < 0 or i == m or j == n or board[i][j] != "O":
+            if i < 0 or j < 0 or i >= rows or j >= cols or board[i][j] != "O":
                 return
-            board[i][j] = "T"
+            board[i][j] = "D"
             dfs(i + 1, j)
             dfs(i - 1, j)
             dfs(i, j + 1)
             dfs(i, j - 1)
+            
+        for r in range(rows):
+            dfs(r, 0)
+            dfs(r, cols - 1)
         
-        for i in range(m):
-            dfs(i, 0)
-            dfs(i, n - 1)
+        for c in range(cols):
+            dfs(0, c)
+            dfs(rows - 1, c)
         
-        for i in range(n):
-            dfs(0, i)
-            dfs(m - 1, i)
-        
-        for i in range(m):
-            for j in range(n):
+        for i in range(rows):
+            for j in range(cols):
                 if board[i][j] == "O":
                     board[i][j] = "X"
-        
-        for i in range(m):
-            for j in range(n):
-                if board[i][j] == "T":
+                elif board[i][j] == "D":
                     board[i][j] = "O"
