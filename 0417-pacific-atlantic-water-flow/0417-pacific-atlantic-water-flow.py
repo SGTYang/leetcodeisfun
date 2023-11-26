@@ -1,28 +1,32 @@
 class Solution:
     def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
-        m, n = len(heights), len(heights[0])
-        pac, atl = set(), set()
+        rows, cols = len(heights), len(heights[0])
+        pac = set()
+        atl = set()
         res = []
         
-        def dfs(i, j, prev, visited):
-            if i < 0 or j < 0 or i >= m or j >= n or (i, j) in visited or heights[i][j] < prev:
+        def dfs(i, j, prev, ocean):
+            if i < 0 or j < 0 or i >= rows or j >= cols or (i, j) in ocean or prev > heights[i][j]:
                 return
-            visited.add((i, j))
-            dfs(i + 1, j, heights[i][j], visited)
-            dfs(i - 1, j, heights[i][j], visited)
-            dfs(i, j + 1, heights[i][j], visited)
-            dfs(i, j - 1, heights[i][j], visited)
+
+            ocean.add((i, j))
             
-        for i in range(m):
-            dfs(i, 0, heights[i][0], pac)
-            dfs(i, n - 1, heights[i][n - 1], atl)
-        
-        for i in range(n):
-            dfs(0, i, heights[0][i], pac)
-            dfs(m - 1, i, heights[m - 1][i], atl)
-        
-        for i in range(m):
-            for j in range(n):
+            dfs(i + 1, j, heights[i][j], ocean)
+            dfs(i - 1, j, heights[i][j], ocean)
+            dfs(i, j + 1, heights[i][j], ocean)
+            dfs(i, j - 1, heights[i][j], ocean)
+            
+        # find
+        for r in range(rows):
+            dfs(r, 0, heights[r][0], pac)
+            dfs(r, cols - 1, heights[r][cols - 1], atl)
+        for c in range(cols):
+            dfs(0, c, heights[0][c], pac)
+            dfs(rows - 1, c, heights[rows - 1][c], atl)
+            
+
+        for i in range(rows):
+            for j in range(cols):
                 if (i, j) in pac and (i, j) in atl:
                     res.append([i, j])
         
