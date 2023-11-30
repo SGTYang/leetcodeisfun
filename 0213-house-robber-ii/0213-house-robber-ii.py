@@ -1,13 +1,19 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        return max(nums[0], self.helper(nums[1:]), self.helper(nums[:-1]))
-    
-    def helper(self, nums):
-        # [rob1, rob2, n, n+1, ...]
-        rob1, rob2 = 0, 0
-        for n in nums:
-            tmp = rob2
-            rob2 = max(rob1 + n, rob2)
-            rob1 = tmp
-        return max(rob1, rob2)
-            
+        one, two = 0, 0
+        for i in range(len(nums) - 1):
+            tmp = two
+            two = max(two, one + nums[i])
+            one = tmp
+        
+        first_cycle = max(one, two)
+        
+        one, two = 0, 0
+        for i in range(1, len(nums)):
+            tmp = two
+            two = max(two, one + nums[i])
+            one = tmp
+        
+        second_cycle = max(one, two)
+        
+        return max(nums[0], first_cycle, second_cycle)
