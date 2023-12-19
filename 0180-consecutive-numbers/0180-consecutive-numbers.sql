@@ -3,6 +3,6 @@
 # from Logs l1, Logs l2, Logs l3
 # where l1.Id = l2.Id - 1 and l2.Id = l3.Id - 1 and l1.Num = l2.Num and l2.Num = l3.Num;
 
-select distinct(num) as ConsecutiveNums
-from (select num, lead(num, 1) over() as n1, lead(num, 2) over() as n2 from Logs) res
-where num=n1 and n1=n2
+select distinct(n1) as ConsecutiveNums
+from (select num as n1, lead(num, 1) over(order by id) as n2, lag(num, 1) over(order by id) as n0 from Logs) res
+where n1=n2 and n1=n0;
