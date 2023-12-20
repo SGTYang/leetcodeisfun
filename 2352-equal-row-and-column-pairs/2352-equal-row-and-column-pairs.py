@@ -1,14 +1,15 @@
 class Solution:
     def equalPairs(self, grid: List[List[int]]) -> int:
-        m = defaultdict(int)
-        cnt = 0
-
-        for row in grid:
-            m[str(row)] += 1
-        
+        row_p = defaultdict(int)
+        res = 0
         for i in range(len(grid[0])):
-            col = []
+            tmp = []
             for j in range(len(grid)):
-                col.append(grid[j][i])
-            cnt += m[str(col)]
-        return cnt
+                tmp.append(grid[j][i])
+            row_p[tuple(tmp)] += 1
+        
+        for i in range(len(grid)):
+            if tuple(grid[i]) in row_p:
+                res += row_p[tuple(grid[i])]
+        
+        return res
