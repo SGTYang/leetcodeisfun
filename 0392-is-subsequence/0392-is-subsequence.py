@@ -1,8 +1,15 @@
 class Solution:
     def isSubsequence(self, s: str, t: str) -> bool:
-        idx = 0
-        for c in t:
-            if idx < len(s) and s[idx] == c:
-                idx += 1
+        if len(s) > len(t):
+            return False
+        left, right = 0, 0
         
-        return len(s) == idx
+        while left < len(s) and right < len(t):
+            if s[left] == t[right]:
+                left += 1
+                right += 1
+            else:
+                right += 1
+        
+        return False if left != len(s) else True
+        
