@@ -7,22 +7,22 @@ class Solution:
     def pairSum(self, head):
         slow = head
         fast = head
-        maxVal = 0
-
+        
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
-
-        nextNode, prev = None, None
+        
+        prev = None
         while slow:
-            nextNode = slow.next
+            tmp = slow.next
             slow.next = prev
             prev = slow
-            slow = nextNode
+            slow = tmp
 
+        res = 0
         while prev:
-            maxVal = max(maxVal, head.val + prev.val)
-            prev = prev.next
+            res = max(res, head.val + prev.val)
             head = head.next
-
-        return maxVal
+            prev = prev.next
+        
+        return res
