@@ -1,18 +1,34 @@
 class Solution:
     def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
-        G = collections.defaultdict(dict)
-        for (x, y), v in zip(equations, values):
-            G[x][y] = v
-            G[y][x] = 1/v
-        def bfs(src, dst):
-            if not (src in G and dst in G): return -1.0
-            q, seen = [(src, 1.0)], set()
-            for x, v in q:
-                if x == dst: 
-                    return v
-                seen.add(x)
-                for y in G[x]:
-                    if y not in seen: 
-                        q.append((y, v*G[x][y]))
+        adj = defaultdict(list)
+        
+        for i in range(len(equations)):
+            x, y = equations[i]
+            adj[x].append((y, values[i]))
+            adj[y].append((x, 1/values[i]))
+        
+        def bfs(q1, q2):
+            if q1 not in adj or q2 not in adj:
+                return -1.0
+            
+            que = deque()
+            que.append([q1, 1])
+            visited = set()
+            visited.add(q1)
+            
+            while que:
+                s, w = que.popleft()
+                
+                if s == q2:
+                    return w
+                
+                for n, weight in adj[s]:
+                    if n not in visited:
+                        visited.add(n)
+                        que.append((n, w * weight))
+                        
             return -1.0
-        return [bfs(s, d) for s, d in queries]
+            
+            
+        
+        return [bfs(q1, q2) for q1, q2 in queries]
