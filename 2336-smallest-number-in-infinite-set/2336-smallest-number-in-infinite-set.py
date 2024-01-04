@@ -1,21 +1,18 @@
 class SmallestInfiniteSet:
-
     def __init__(self):
-        self.pop_set = set()
-        self.min_num = 1
+        self.pop = set()
         
     def popSmallest(self) -> int:
-        res = self.min_num
-        self.pop_set.add(self.min_num)
+        pointer = 1
+        while pointer in self.pop:
+            pointer += 1
         
-        while self.min_num in self.pop_set:
-            self.min_num += 1
-        return res
-        
+        self.pop.add(pointer)
+        return pointer
+
     def addBack(self, num: int) -> None:
-        if num in self.pop_set:
-            self.min_num = min(num, self.min_num)
-            self.pop_set.remove(num)
+        if num in self.pop:
+            self.pop.remove(num)
 
 
 # Your SmallestInfiniteSet object will be instantiated and called as such:
