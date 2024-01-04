@@ -1,31 +1,28 @@
 class Solution:
     def totalCost(self, costs: List[int], k: int, candidates: int) -> int:
         heap = []
+        res = []
+        
+        left, right = 0, len(costs) - 1
+        
+        while left < candidates:
+            heapq.heappush(heap, (costs[left], left))
+            left += 1
+            
+        while right >= len(costs) - candidates and left <= right:
+            heapq.heappush(heap, (costs[right], right))
+            right -= 1
+        
+        while len(res) < k:            
+            v, i = heapq.heappop(heap)
+            res.append(v)
+            
+            if i < left and left <= right:
+                heapq.heappush(heap, (costs[left], left))
+                left += 1
+            
+            elif i > right and left <= right:
+                heapq.heappush(heap, (costs[right], right))
+                right -= 1
 
-        p1 = 0
-        p2 = len(costs)-1
-
-        while(p1 < candidates):
-            heapq.heappush(heap, (costs[p1], p1))
-            p1 += 1
-
-        while(p2 >= len(costs)-candidates and p2 >= p1):
-            heapq.heappush(heap, (costs[p2], p2))
-            p2 -= 1
-
-        res = 0
-        for i in range(k):
-            c, idx = heapq.heappop(heap)
-
-            res += c
-
-            if idx < p1:
-                if p1 <= p2:
-                    heapq.heappush(heap, (costs[p1], p1))
-                    p1 += 1
-            else:
-                if p1 <= p2:
-                    heapq.heappush(heap, (costs[p2], p2))
-                    p2 -= 1
-
-        return res
+        return sum(res)
