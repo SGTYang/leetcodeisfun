@@ -10,15 +10,10 @@ class Solution:
         
         res = 0
         
-        while diff:
-            if diff >= 60:
-                diff -= 60
-            elif diff >= 15:
-                diff -= 15
-            elif diff >= 5:
-                diff -= 5
-            else:
-                diff -= 1
-            res += 1
+        time_increase = [60, 15, 5, 1]
+        
+        for time in time_increase:
+            res += diff // time
+            diff = diff % time
         
         return res
