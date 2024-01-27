@@ -1,14 +1,18 @@
 class Solution:
     def calculate(self, s: str) -> int:
+        " 10 + 3 * 4"
+        # store the number in an array, when the c is not an number append in the stack
+        # only if c is equal to */ pop the last element from the array and calculate
+        # return sum(array)
+        # num = num * 10 + int(c)
         num = 0
-        s += "+"
-        sign = "+"
         stack = []
+        sign = "+"
         
-        for i in range(len(s)):
-            if s[i].isdigit():
-                num = num * 10 + int(s[i])
-            elif s[i] in "+*-/":
+        for c in s+"-":
+            if c.isdigit():
+                num = num * 10 + int(c)
+            elif c in "+*-/":
                 if sign == "+":
                     stack.append(num)
                 elif sign == "-":
@@ -17,7 +21,7 @@ class Solution:
                     stack.append(stack.pop() * num)
                 elif sign == "/":
                     stack.append(math.trunc(stack.pop() / num))
-
-                sign = s[i]
                 num = 0
+                sign = c
+        
         return sum(stack)
