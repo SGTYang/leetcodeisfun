@@ -4,6 +4,8 @@ class Solution:
         # create dict, k: (diff) v: list
         diff = defaultdict(list)
         
+        # O(n*c)
+        # O(n)
         for string in strings:
             if len(string) == 1:
                 diff[(-1)].append(string)
