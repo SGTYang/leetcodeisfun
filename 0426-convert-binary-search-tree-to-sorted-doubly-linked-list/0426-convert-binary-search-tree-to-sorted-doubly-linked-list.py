@@ -9,30 +9,29 @@ class Node:
 
 class Solution:
     def treeToDoublyList(self, root: 'Optional[Node]') -> 'Optional[Node]':
-        if root == None:
+        if not root:
             return None
-
-        head = prev = None
-
-        def in_order(curr):
-            if curr == None:
-                return
+        
+        self.head, self.prev = None, None
+        
+        def in_order(node):
+            if not node:
+                return None
             
-            nonlocal prev, head
+            in_order(node.left)
             
-            in_order(curr.left)
-            
-            if not prev:
-                head = curr
-                
+            if not self.prev:
+                self.head = node
             else:
-                prev.right = curr
-                curr.left = prev
-                
-            prev = curr
-            in_order(curr.right)
-
+                self.prev.right = node
+                node.left = self.prev
+            
+            self.prev = node
+            in_order(node.right)
+        
         in_order(root)
-        prev.right = head
-        head.left = prev
-        return head
+        self.prev.right = self.head
+        self.head.left = self.prev
+        
+        return self.head
+            
