@@ -1,16 +1,16 @@
 class Solution:
     def minAddToMakeValid(self, s: str) -> int:
         res = 0
-        stack = []
+        open_paren = 0
         
         for c in s:
             if c == "(":
-                stack.append(c)
+                open_paren += 1
             elif c == ")":
-                if stack:
-                    stack.pop()
+                if open_paren:
+                    open_paren -= 1
                 else:
                     res += 1
         
-        res += len(stack)
+        res += open_paren
         return res
